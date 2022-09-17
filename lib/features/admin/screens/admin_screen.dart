@@ -1,5 +1,7 @@
 import 'package:pakkstan/constants/global_variables.dart';
 import 'package:flutter/material.dart';
+import 'package:pakkstan/features/admin/screens/analytics_screen.dart';
+import 'package:pakkstan/features/admin/screens/orders_screen.dart';
 import 'package:pakkstan/features/admin/screens/posts_screen.dart';
 
 class AdminScreen extends StatefulWidget {

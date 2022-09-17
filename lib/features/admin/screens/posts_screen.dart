@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pakkstan/common/widgets/loader.dart';
-import 'package:pakkstan/features/account/services/account_services.dart';
 import 'package:pakkstan/features/account/widgets/single_product.dart';
 import 'package:pakkstan/features/admin/screens/add_product_screen.dart';
+import 'package:pakkstan/features/admin/services/admin_services.dart';
 import 'package:pakkstan/models/product.dart';
 
 class PostsScreen extends StatefulWidget {
