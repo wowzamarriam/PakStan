@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:pakkstan/Constants/global_variables.dart';
-import 'package:pakkstan/common/widgets/bottom_bar.dart';
-import 'package:pakkstan/features/admin/screens/admin_screen.dart';
-import 'package:pakkstan/features/auth/screens/auth_screen.dart';
-import 'package:pakkstan/features/auth/services/auth_service.dart';
-import 'package:pakkstan/providers/user_provider.dart';
-import 'package:pakkstan/router.dart';
+import 'Constants/global_variables.dart';
+import 'common/widgets/bottom_bar.dart';
+import 'features/admin/screens/admin_screen.dart';
+import 'features/auth/screens/auth_screen.dart';
+import 'features/auth/services/auth_service.dart';
+import 'providers/user_provider.dart';
+import 'router.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(
-      create: (context) => UserProvider(),
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => UserProvider(),
+        ),
+      ],
+      child: const MyApp(),
     ),
-  ], child: const MyApp()));
+  );
 }
-
+// yeh prho right :) haha
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 

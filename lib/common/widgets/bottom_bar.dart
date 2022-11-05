@@ -1,11 +1,12 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
-import 'package:pakkstan/Constants/global_variables.dart';
-import 'package:pakkstan/features/account/screens/account_screen.dart';
-import 'package:pakkstan/features/cart/screens/cart_screen.dart';
-import 'package:pakkstan/features/home/screens/home_screen.dart';
-import 'package:pakkstan/providers/user_provider.dart';
 import 'package:provider/provider.dart';
+
+import '../../Constants/global_variables.dart';
+import '../../features/account/screens/account_screen.dart';
+import '../../features/cart/screens/cart_screen.dart';
+import '../../features/home/screens/home_screen.dart';
+import '../../providers/user_provider.dart';
 
 class BottomBar extends StatefulWidget {
   static const String routeName = '/actual-home';
@@ -40,8 +41,8 @@ class _BottomBarState extends State<BottomBar> {
       body: pages[_page],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _page,
-        selectedItemColor: GlobalVariables.selectedNavBarColor,
-        unselectedItemColor: GlobalVariables.unselectedNavBarColor,
+        selectedItemColor: const Color.fromARGB(255, 20, 118, 113),
+        unselectedItemColor: const Color.fromARGB(255, 20, 118, 113),
         backgroundColor: GlobalVariables.backgroundColor,
         iconSize: 28,
         onTap: updatePage,

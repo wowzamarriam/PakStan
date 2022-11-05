@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:pakkstan/common/widgets/custom_button.dart';
-import 'package:pakkstan/constants/global_variables.dart';
-import 'package:pakkstan/features/admin/services/admin_services.dart';
-import 'package:pakkstan/features/search/screens/search_screen.dart';
-import 'package:pakkstan/models/order.dart';
-import 'package:pakkstan/providers/user_provider.dart';
 import 'package:provider/provider.dart';
+
+import '../../../common/widgets/custom_button.dart';
+import '../../../constants/global_variables.dart';
+import '../../../models/order.dart';
+import '../../../providers/user_provider.dart';
+import '../../admin/services/admin_services.dart';
+import '../../search/screens/search_screen.dart';
 
 class OrderDetailScreen extends StatefulWidget {
   static const String routeName = '/order-details';
@@ -34,7 +35,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
     currentStep = widget.order.status;
   }
 
-  // !!! ONLY FOR ADMIN!!!
+  // ONLY FOR ADMIN!
   void changeOrderStatus(int status) {
     adminServices.changeOrderStatus(
       context: context,
@@ -105,7 +106,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                             width: 1,
                           ),
                         ),
-                        hintText: 'Search Amazon.in',
+                        hintText: 'Search PakStan.pk',
                         hintStyle: const TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 17,
@@ -149,12 +150,14 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Order Date:      ${DateFormat().format(
+                    Text('Order Date:             ${DateFormat().format(
                       DateTime.fromMillisecondsSinceEpoch(
                           widget.order.orderedAt),
                     )}'),
-                    Text('Order ID:          ${widget.order.id}'),
-                    Text('Order Total:      \$${widget.order.totalPrice}'),
+                    Text('Order ID:                  ${widget.order.id}'),
+                    Text(
+                        'Order Total:             \$${widget.order.totalPrice}'),
+                    Text('Payment Method:   ${widget.order.payment}'),
                   ],
                 ),
               ),

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:pakkstan/Constants/global_variables.dart';
-import 'package:pakkstan/features/account/services/account_services.dart';
-import 'package:pakkstan/common/widgets/loader.dart';
-import 'package:pakkstan/features/account/widgets/single_product.dart';
-import 'package:pakkstan/features/order_details/screens/order_details.dart';
-import 'package:pakkstan/models/order.dart';
+
+import '../../../common/widgets/loader.dart';
+import '../../../models/order.dart';
+import '../../order_details/screens/order_details.dart';
+import '../services/account_services.dart';
+import 'single_product.dart';
 
 class Orders extends StatefulWidget {
   const Orders({Key? key}) : super(key: key);
@@ -53,10 +53,10 @@ class _OrdersState extends State<Orders> {
                     padding: const EdgeInsets.only(
                       right: 15,
                     ),
-                    child: Text(
+                    child: const Text(
                       'See all',
                       style: TextStyle(
-                        color: GlobalVariables.selectedNavBarColor,
+                        color: Color.fromARGB(255, 20, 118, 113),
                       ),
                     ),
                   ),

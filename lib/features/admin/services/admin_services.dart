@@ -1,16 +1,19 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
-import 'package:pakkstan/features/admin/models/sales.dart';
-import 'package:pakkstan/models/order.dart';
+
 import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:pakkstan/Constants/global_variables.dart';
-import 'package:pakkstan/constants/error_handling.dart';
-import 'package:pakkstan/constants/utils.dart';
-import 'package:pakkstan/models/product.dart';
-import 'package:pakkstan/providers/user_provider.dart';
 import 'package:provider/provider.dart';
+
+import '../../../Constants/global_variables.dart';
+import '../../../constants/error_handling.dart';
+import '../../../constants/utils.dart';
+import '../../../models/order.dart';
+import '../../../models/product.dart';
+import '../../../providers/user_provider.dart';
+import '../models/sales.dart';
 
 class AdminServices {
   void sellProduct({
@@ -128,6 +131,51 @@ class AdminServices {
       showSnackBar(context, e.toString());
     }
   }
+  updateProduct({
+    required BuildContext context,
+    required String name,
+    required String description,
+    required double price,
+    required double quantity,
+    required String category,
+    required List<String> images,
+    required Product product,
+    required VoidCallback onSuccess,
+  }) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+    // try {
+    Product updateProduct = Product(
+      name: name,
+      description: description,
+      quantity: quantity,
+      images: images,
+      category: category,
+      price: price,
+    );
+
+    http.Response res = await http.post(
+      Uri.parse('$uri/admin/update-product/${product.id}'),
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'x-auth-token': userProvider.user.token,
+      },
+      body: jsonEncode({
+        'id': updateProduct.toJson(),
+      }),
+    );
+
+    httpErrorHandle(
+      response: res,
+      context: context,
+      onSuccess: () {
+        onSuccess();
+      },
+    );
+    // } catch (e) {
+    //   showSnackBar(context, e.toString());
+    // }
+  }
 
   Future<List<Order>> fetchAllOrders(BuildContext context) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
@@ -138,7 +186,7 @@ class AdminServices {
         'Content-Type': 'application/json; charset=UTF-8',
         'x-auth-token': userProvider.user.token,
       });
-
+      log(res.body);
       httpErrorHandle(
         response: res,
         context: context,
@@ -200,8 +248,9 @@ class AdminServices {
           await http.get(Uri.parse('$uri/admin/analytics'), headers: {
         'Content-Type': 'application/json; charset=UTF-8',
         'x-auth-token': userProvider.user.token,
-      });
-
+      }); //wait the categories are wrong down there enjoy wait lol now how to
+      //get back to the user panel there )::()
+      log(res.body);
       httpErrorHandle(
         response: res,
         context: context,
@@ -209,11 +258,11 @@ class AdminServices {
           var response = jsonDecode(res.body);
           totalEarning = response['totalEarnings'];
           sales = [
-            Sales('Mobiles', response['mobileEarnings']),
-            Sales('Essentials', response['essentialEarnings']),
-            Sales('Books', response['booksEarnings']),
-            Sales('Appliances', response['applianceEarnings']),
+            Sales('Bags', response['bagsEarnings']),
             Sales('Fashion', response['fashionEarnings']),
+            Sales('Crockery', response['crockeryEarnings']),
+            Sales('Shoes', response['shoesEarnings']),
+            Sales('Jewellery', response['jewelleryEarnings']),
           ];
         },
       );

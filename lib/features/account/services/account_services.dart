@@ -1,14 +1,18 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:pakkstan/constants/error_handling.dart';
-import 'package:pakkstan/constants/global_variables.dart';
-import 'package:pakkstan/constants/utils.dart';
-import 'package:pakkstan/features/auth/screens/auth_screen.dart';
-import 'package:pakkstan/models/order.dart';
-import 'package:pakkstan/providers/user_provider.dart';
-import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../constants/error_handling.dart';
+import '../../../constants/global_variables.dart';
+import '../../../constants/utils.dart';
+import '../../../models/order.dart';
+import '../../../providers/user_provider.dart';
+import '../../auth/screens/auth_screen.dart';
 
 class AccountServices {
   Future<List<Order>> fetchMyOrders({

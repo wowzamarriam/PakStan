@@ -1,8 +1,11 @@
-import 'package:pakkstan/constants/global_variables.dart';
 import 'package:flutter/material.dart';
-import 'package:pakkstan/features/admin/screens/analytics_screen.dart';
-import 'package:pakkstan/features/admin/screens/orders_screen.dart';
-import 'package:pakkstan/features/admin/screens/posts_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../constants/global_variables.dart';
+import '../../auth/screens/auth_screen.dart';
+import 'analytics_screen.dart';
+import 'orders_screen.dart';
+import 'posts_screen.dart';
 
 class AdminScreen extends StatefulWidget {
   const AdminScreen({Key? key}) : super(key: key);
@@ -45,9 +48,10 @@ class _AdminScreenState extends State<AdminScreen> {
               Container(
                 alignment: Alignment.topLeft,
                 child: Image.asset(
-                  'assets/images/amazon_in.png',
-                  width: 120,
+                  'assets/images/logo.png',
+                  width: 115,
                   height: 45,
+                  fit: BoxFit.fitWidth,
                   color: Colors.black,
                 ),
               ),
@@ -60,6 +64,49 @@ class _AdminScreenState extends State<AdminScreen> {
               )
             ],
           ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: const Text("Confirm"),
+                      content: const Text('You want to Sign-Out?'),
+                      actions: [
+                        TextButton(
+                          // ab theyayyy haha
+                          onPressed: () async {
+                            Navigator.of(context).pop();
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              AuthScreen.routeName,
+                              (route) => false,
+                            );
+                            // Provider.of<UserProvider>(context).logoutUser();
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            await prefs.setString('x-auth-token', '');
+                          },
+                          child: const Text('Yes'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('No'),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+                child: const Icon(
+                  Icons.logout,
+                ),
+              ),
+            )
+          ],
         ),
       ),
       body: pages[_page],

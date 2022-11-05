@@ -1,14 +1,19 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
-import 'package:pakkstan/common/widgets/bottom_bar.dart';
-import 'package:pakkstan/constants/error_handling.dart';
-import 'package:pakkstan/constants/global_variables.dart';
-import 'package:pakkstan/constants/utils.dart';
-import 'package:pakkstan/models/user.dart';
-import 'package:http/http.dart' as http;
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:pakkstan/providers/user_provider.dart';
+import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../common/widgets/bottom_bar.dart';
+import '../../../constants/error_handling.dart';
+import '../../../constants/global_variables.dart';
+import '../../../constants/utils.dart';
+import '../../../models/user.dart';
+import '../../../providers/user_provider.dart';
 
 class AuthService {
   // sign up user
@@ -28,6 +33,7 @@ class AuthService {
         type: '',
         token: '',
         cart: [],
+        favorite: [],
       );
 
       http.Response res = await http.post(
@@ -37,7 +43,7 @@ class AuthService {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-
+      log(res.body.toString());
       httpErrorHandle(
         response: res,
         context: context,

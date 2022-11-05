@@ -1,9 +1,11 @@
+
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
-import 'package:pakkstan/common/widgets/loader.dart';
-import 'package:pakkstan/features/admin/models/sales.dart';
-import 'package:pakkstan/features/admin/services/admin_services.dart';
-import 'package:pakkstan/features/admin/widgets/category_products_chart.dart';
+
+import '../../../common/widgets/loader.dart';
+import '../models/sales.dart';
+import '../services/admin_services.dart';
+import '../widgets/category_products_chart.dart';
 
 class AnalyticsScreen extends StatefulWidget {
   const AnalyticsScreen({Key? key}) : super(key: key);
@@ -45,14 +47,16 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
               ),
               SizedBox(
                 height: 250,
-                child: CategoryProductsChart(seriesList: [
-                  charts.Series(
-                    id: 'Sales',
-                    data: earnings!,
-                    domainFn: (Sales sales, _) => sales.label,
-                    measureFn: (Sales sales, _) => sales.earning,
-                  ),
-                ]),
+                child: CategoryProductsChart(
+                  seriesList: [
+                    charts.Series(
+                      id: 'Sales', // pehle arha tha? no
+                      data: earnings!,
+                      domainFn: (Sales sales, _) => sales.label,
+                      measureFn: (Sales sales, _) => sales.earning,
+                    ),
+                  ],
+                ),
               )
             ],
           );

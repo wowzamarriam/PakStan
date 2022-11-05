@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
-import 'package:pakkstan/features/admin/models/sales.dart';
+
+import '../models/sales.dart';
 
 class CategoryProductsChart extends StatelessWidget {
   final List<charts.Series<Sales, String>> seriesList;
@@ -11,6 +14,7 @@ class CategoryProductsChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log(seriesList[0].toString());
     return charts.BarChart(
       seriesList,
       animate: true,

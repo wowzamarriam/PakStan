@@ -1,15 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:pakkstan/common/widgets/custom_button.dart';
-import 'package:pakkstan/common/widgets/stars.dart';
-import 'package:pakkstan/constants/global_variables.dart';
-import 'package:pakkstan/features/product_details/services/product_details_services.dart';
-import 'package:pakkstan/features/search/screens/search_screen.dart';
-import 'package:pakkstan/models/product.dart';
-import 'package:pakkstan/providers/user_provider.dart';
 import 'package:provider/provider.dart';
+
+import '../../../common/widgets/custom_button.dart';
+import '../../../common/widgets/stars.dart';
+import '../../../constants/global_variables.dart';
+import '../../../models/product.dart';
+import '../../../providers/user_provider.dart';
+import '../../search/screens/search_screen.dart';
+import '../services/product_details_services.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   static const String routeName = '/product-details';
@@ -52,6 +52,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   void addToCart() {
     productDetailsServices.addToCart(
+      context: context,
+      product: widget.product,
+    );
+  }
+
+  addToWishList() async {
+    await productDetailsServices.addToWishLIst(
       context: context,
       product: widget.product,
     );
@@ -112,7 +119,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             width: 1,
                           ),
                         ),
-                        hintText: 'Search Amazon.in',
+                        hintText: 'Search PakStan.pk',
                         hintStyle: const TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 17,
@@ -195,7 +202,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ),
                   children: [
                     TextSpan(
-                      text: '\$${widget.product.price}',
+                      text: 'Rs ${widget.product.price}',
                       style: const TextStyle(
                         fontSize: 22,
                         color: Colors.red,
@@ -217,11 +224,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             Padding(
               padding: const EdgeInsets.all(10),
               child: CustomButton(
-                text: 'Buy Now',
-                onTap: () {},
+                text: 'Add to Wishlist',
+                onTap: () async {
+                  await addToWishList();
+                },
               ),
             ),
-            const SizedBox(height: 10),
+            // const SizedBox(height: 2),
             Padding(
               padding: const EdgeInsets.all(10),
               child: CustomButton(

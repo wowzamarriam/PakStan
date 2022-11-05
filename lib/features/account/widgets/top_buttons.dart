@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:pakkstan/features/account/services/account_services.dart';
-import 'package:pakkstan/features/account/widgets/account_button.dart';
+
+import '../../wishlist/screens/wishlist_screen.dart';
+import '../services/account_services.dart';
+import 'account_button.dart';
 
 class TopButtons extends StatelessWidget {
   const TopButtons({Key? key}) : super(key: key);
-
+  navigateToWishlistScreen(BuildContext context) {
+    Navigator.of(context).pushNamed(WishListScreen.routeName);
+  }
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -12,25 +16,21 @@ class TopButtons extends StatelessWidget {
         Row(
           children: [
             AccountButton(
-              text: 'Your Orders',
-              onTap: () {},
-            ),
-            AccountButton(
-              text: 'Turn Seller',
-              onTap: () {},
+              text: 'Log Out',
+              onTap: () => AccountServices().logOut(context),
             ),
           ],
         ),
         const SizedBox(height: 10),
         Row(
           children: [
+            // AccountButton(
+            //   text: 'Your Orders',
+            //   onTap: () {},
+            // ),
             AccountButton(
-              text: 'Log Out',
-              onTap: () => AccountServices().logOut(context),
-            ),
-            AccountButton(
-              text: 'Your Wish List',
-              onTap: () {},
+              text: 'Wish List',
+              onTap: () => navigateToWishlistScreen(context),
             ),
           ],
         ),

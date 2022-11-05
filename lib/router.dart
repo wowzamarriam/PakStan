@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:pakkstan/common/widgets/bottom_bar.dart';
-import 'package:pakkstan/features/address/screens/address_screen.dart';
-import 'package:pakkstan/features/admin/screens/add_product_screen.dart';
-import 'package:pakkstan/features/auth/screens/auth_screen.dart';
-import 'package:pakkstan/features/home/screens/category_deals_screen.dart';
-import 'package:pakkstan/features/home/screens/home_screen.dart';
-import 'package:pakkstan/features/order_details/screens/order_details.dart';
-import 'package:pakkstan/features/product_details/screens/product_details_screen.dart';
-import 'package:pakkstan/features/search/screens/search_screen.dart';
-import 'package:pakkstan/models/order.dart';
-import 'package:pakkstan/models/product.dart';
+import 'package:pakkstan/features/wishlist/screens/wishlist_screen.dart';
+
+import 'common/widgets/bottom_bar.dart';
+import 'features/address/screens/address_screen.dart';
+import 'features/admin/screens/add_product_screen.dart';
+import 'features/auth/screens/auth_screen.dart';
+import 'features/home/screens/category_deals_screen.dart';
+import 'features/home/screens/home_screen.dart';
+import 'features/order_details/screens/order_details.dart';
+import 'features/product_details/screens/product_details_screen.dart';
+import 'features/search/screens/search_screen.dart';
+import 'models/order.dart';
+import 'models/product.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
   switch (routeSettings.name) {
@@ -74,6 +76,11 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         builder: (_) => OrderDetailScreen(
           order: order,
         ),
+      );
+      case WishListScreen.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => const WishListScreen(),
       );
     default:
       return MaterialPageRoute(

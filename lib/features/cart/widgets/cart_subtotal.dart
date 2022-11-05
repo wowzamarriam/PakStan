@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pakkstan/providers/user_provider.dart';
 import 'package:provider/provider.dart';
+
+import '../../../providers/user_provider.dart';
 
 class CartSubtotal extends StatelessWidget {
   const CartSubtotal({Key? key}) : super(key: key);
@@ -24,7 +25,7 @@ class CartSubtotal extends StatelessWidget {
             ),
           ),
           Text(
-            '\$$sum',
+            'Rs $sum',
             style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,

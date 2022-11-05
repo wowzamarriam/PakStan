@@ -1,11 +1,17 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:pakkstan/common/widgets/custom_textfield.dart';
-import 'package:pakkstan/constants/global_variables.dart';
-import 'package:pakkstan/constants/utils.dart';
-import 'package:pakkstan/features/address/services/address_services.dart';
-import 'package:pakkstan/providers/user_provider.dart';
+import 'package:pakkstan/common/widgets/custom_button.dart';
 import 'package:pay/pay.dart';
 import 'package:provider/provider.dart';
+
+import '../../../common/widgets/custom_textfield.dart';
+import '../../../constants/global_variables.dart';
+import '../../../constants/utils.dart';
+import '../../../providers/user_provider.dart';
+import '../services/address_services.dart';
 
 class AddressScreen extends StatefulWidget {
   static const String routeName = '/address';
@@ -29,7 +35,7 @@ class _AddressScreenState extends State<AddressScreen> {
   String addressToBeUsed = "";
   List<PaymentItem> paymentItems = [];
   final AddressServices addressServices = AddressServices();
-
+  int paymentController = 1;
   @override
   void initState() {
     super.initState();
@@ -51,6 +57,29 @@ class _AddressScreenState extends State<AddressScreen> {
     cityController.dispose();
   }
 
+  onCashOnDeviveryPressed() async {
+    payPressed(Provider.of<UserProvider>(context, listen: false).user.address);
+
+    if (Provider.of<UserProvider>(context, listen: false)
+        .user
+        .address
+        .isEmpty) {
+      log(addressToBeUsed);
+      await addressServices.saveUserAddress(
+        context: context,
+        address: addressToBeUsed,
+      );
+    }
+    log(addressToBeUsed);
+
+    await addressServices.placeOrder(
+      context: context,
+      address: addressToBeUsed,
+      paymentMethod: 'COD',
+      totalSum: double.parse(widget.totalAmount),
+    );
+  }
+
   void onApplePayResult(res) {
     if (Provider.of<UserProvider>(context, listen: false)
         .user
@@ -62,6 +91,7 @@ class _AddressScreenState extends State<AddressScreen> {
     addressServices.placeOrder(
       context: context,
       address: addressToBeUsed,
+      paymentMethod: 'Apple Pay',
       totalSum: double.parse(widget.totalAmount),
     );
   }
@@ -77,6 +107,7 @@ class _AddressScreenState extends State<AddressScreen> {
     addressServices.placeOrder(
       context: context,
       address: addressToBeUsed,
+      paymentMethod: 'Google Pay',
       totalSum: double.parse(widget.totalAmount),
     );
   }
@@ -88,7 +119,6 @@ class _AddressScreenState extends State<AddressScreen> {
         areaController.text.isNotEmpty ||
         pincodeController.text.isNotEmpty ||
         cityController.text.isNotEmpty;
-
     if (isForm) {
       if (_addressFormKey.currentState!.validate()) {
         addressToBeUsed =
@@ -180,31 +210,91 @@ class _AddressScreenState extends State<AddressScreen> {
                   ],
                 ),
               ),
-              ApplePayButton(
-                width: double.infinity,
-                style: ApplePayButtonStyle.whiteOutline,
-                type: ApplePayButtonType.buy,
-                paymentConfigurationAsset: 'applepay.json',
-                onPaymentResult: onApplePayResult,
-                paymentItems: paymentItems,
-                margin: const EdgeInsets.only(top: 15),
-                height: 50,
-                onPressed: () => payPressed(address),
+              Row(
+                children: [
+                  Radio(
+                    value: 1,
+                    activeColor: GlobalVariables.secondaryColor,
+                    groupValue: paymentController,
+                    onChanged: (_) {
+                      setState(() {
+                        paymentController = 1;
+                      });
+                    },
+                  ),
+                  Text(
+                    'Pay Now',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: paymentController == 1
+                          ? FontWeight.bold
+                          : FontWeight.normal,
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 10),
-              GooglePayButton(
-                onPressed: () => payPressed(address),
-                paymentConfigurationAsset: 'gpay.json',
-                onPaymentResult: onGooglePayResult,
-                paymentItems: paymentItems,
-                height: 50,
-                style: GooglePayButtonStyle.black,
-                type: GooglePayButtonType.buy,
-                margin: const EdgeInsets.only(top: 15),
-                loadingIndicator: const Center(
-                  child: CircularProgressIndicator(),
+              if (paymentController == 1) ...{
+                ApplePayButton(
+                  width: double.infinity,
+                  style: ApplePayButtonStyle.whiteOutline,
+                  type: ApplePayButtonType.buy,
+                  paymentConfigurationAsset: 'applepay.json',
+                  onPaymentResult: onApplePayResult,
+                  paymentItems: paymentItems,
+                  // margin: const EdgeInsets.only(top: 15),
+                  height: 50,
+                  onPressed: () => payPressed(address),
                 ),
+                // const SizedBox(height: 10),
+                GooglePayButton(
+                  onPressed: () => payPressed(address),
+                  paymentConfigurationAsset: 'gpay.json',
+                  onPaymentResult: onGooglePayResult,
+                  paymentItems: paymentItems,
+                  height: 50,
+                  
+                  // style: GooglePayButtonStyle.black,
+                  type: GooglePayButtonType.buy,
+                  // margin: const EdgeInsets.only(top: 15),
+                  loadingIndicator: const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+              },
+              Row(
+                children: [
+                  Radio(
+                    value: 2,
+                    activeColor: GlobalVariables.secondaryColor,
+                    groupValue: paymentController,
+                    onChanged: (_) {
+                      setState(() {
+                        paymentController = 2;
+                      });
+                    },
+                  ),
+                  Text(
+                    "Cash on delivery",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: paymentController == 2
+                          ? FontWeight.bold
+                          : FontWeight.normal,
+                    ),
+                  ),
+                ],
               ),
+              if (paymentController == 2)
+                SizedBox(
+                  width: 100,
+                  child: CustomButton(
+                    text: 'Buy Now',
+                    onTap: () async {
+                      await onCashOnDeviveryPressed();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                )
             ],
           ),
         ),

@@ -1,11 +1,11 @@
-import 'package:pakkstan/constants/global_variables.dart';
-
 import 'package:flutter/material.dart';
-import 'package:pakkstan/features/home/widgets/address_box.dart';
-import 'package:pakkstan/features/home/widgets/carousel_image.dart';
-import 'package:pakkstan/features/home/widgets/deal_of_day.dart';
-import 'package:pakkstan/features/home/widgets/top_categories.dart';
-import 'package:pakkstan/features/search/screens/search_screen.dart';
+
+import '../../../constants/global_variables.dart';
+import '../../search/screens/search_screen.dart';
+import '../widgets/address_box.dart';
+import '../widgets/carousel_image.dart';
+import '../widgets/deal_of_day.dart';
+import '../widgets/top_categories.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = '/home';
@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             width: 1,
                           ),
                         ),
-                        hintText: 'Search Amazon.in',
+                        hintText: 'Search PakStan.pk',
                         hintStyle: const TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 17,

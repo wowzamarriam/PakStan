@@ -1,14 +1,14 @@
-import 'package:pakkstan/features/address/screens/address_screen.dart';
-import 'package:pakkstan/features/cart/widgets/cart_product.dart';
-import 'package:pakkstan/features/cart/widgets/cart_subtotal.dart';
-
 import 'package:flutter/material.dart';
-import 'package:pakkstan/common/widgets/custom_button.dart';
-import 'package:pakkstan/constants/global_variables.dart';
-import 'package:pakkstan/features/home/widgets/address_box.dart';
-import 'package:pakkstan/features/search/screens/search_screen.dart';
-import 'package:pakkstan/providers/user_provider.dart';
 import 'package:provider/provider.dart';
+
+import '../../../common/widgets/custom_button.dart';
+import '../../../constants/global_variables.dart';
+import '../../../providers/user_provider.dart';
+import '../../address/screens/address_screen.dart';
+import '../../home/widgets/address_box.dart';
+import '../../search/screens/search_screen.dart';
+import '../widgets/cart_product.dart';
+import '../widgets/cart_subtotal.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -91,7 +91,7 @@ class _CartScreenState extends State<CartScreen> {
                             width: 1,
                           ),
                         ),
-                        hintText: 'Search Amazon.in',
+                        hintText: 'Search PakStan.pk',
                         hintStyle: const TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 17,
@@ -120,8 +120,8 @@ class _CartScreenState extends State<CartScreen> {
               padding: const EdgeInsets.all(8.0),
               child: CustomButton(
                 text: 'Proceed to Buy (${user.cart.length} items)',
-                onTap: () => navigateToAddress(sum),
-                color: Colors.yellow[600],
+                onTap:
+                    user.cart.isNotEmpty ? () => navigateToAddress(sum) : () {},
               ),
             ),
             const SizedBox(height: 15),

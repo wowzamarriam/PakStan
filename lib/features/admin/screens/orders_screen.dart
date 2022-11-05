@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:pakkstan/common/widgets/loader.dart';
-import 'package:pakkstan/features/account/widgets/single_product.dart';
-import 'package:pakkstan/features/admin/services/admin_services.dart';
-import 'package:pakkstan/features/order_details/screens/order_details.dart';
-import 'package:pakkstan/models/order.dart';
+
+import '../../../common/widgets/loader.dart';
+import '../../../models/order.dart';
+import '../../account/widgets/single_product.dart';
+import '../../order_details/screens/order_details.dart';
+import '../services/admin_services.dart';
 
 class OrdersScreen extends StatefulWidget {
   const OrdersScreen({Key? key}) : super(key: key);
@@ -24,6 +27,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
   void fetchOrders() async {
     orders = await adminServices.fetchAllOrders(context);
+ 
     setState(() {});
   }
 

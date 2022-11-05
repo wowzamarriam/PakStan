@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:pakkstan/common/widgets/loader.dart';
-import 'package:pakkstan/constants/global_variables.dart';
-import 'package:pakkstan/features/home/services/home_services.dart';
-import 'package:pakkstan/features/product_details/screens/product_details_screen.dart';
-import 'package:pakkstan/models/product.dart';
+
+import '../../../common/widgets/loader.dart';
+import '../../../constants/global_variables.dart';
+import '../../../models/product.dart';
+import '../../product_details/screens/product_details_screen.dart';
+import '../services/home_services.dart';
 
 class CategoryDealsScreen extends StatefulWidget {
   static const String routeName = '/category-deals';

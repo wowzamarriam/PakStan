@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:pakkstan/features/cart/services/cart_services.dart';
-import 'package:pakkstan/features/product_details/services/product_details_services.dart';
-import 'package:pakkstan/models/product.dart';
-import 'package:pakkstan/providers/user_provider.dart';
 import 'package:provider/provider.dart';
+
+import '../../../models/product.dart';
+import '../../../providers/user_provider.dart';
+import '../../product_details/services/product_details_services.dart';
+import '../services/cart_services.dart';
 
 class CartProduct extends StatefulWidget {
   final int index;
@@ -72,7 +73,7 @@ class _CartProductState extends State<CartProduct> {
                     width: 235,
                     padding: const EdgeInsets.only(left: 10, top: 5),
                     child: Text(
-                      '\$${product.price}',
+                      'Rs ${product.price}',
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -83,7 +84,7 @@ class _CartProductState extends State<CartProduct> {
                   Container(
                     width: 235,
                     padding: const EdgeInsets.only(left: 10),
-                    child: const Text('Eligible for FREE Shipping'),
+                    child: const Text('Eligible for Shipping'),
                   ),
                   Container(
                     width: 235,

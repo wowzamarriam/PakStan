@@ -1,6 +1,7 @@
-import 'package:pakkstan/common/widgets/stars.dart';
 import 'package:flutter/material.dart';
-import 'package:pakkstan/models/product.dart';
+
+import '../../../common/widgets/stars.dart';
+import '../../../models/product.dart';
 
 class SearchedProduct extends StatelessWidget {
   final Product product;

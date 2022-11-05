@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:pakkstan/models/rating.dart';
+import 'rating.dart';
 
 class Product {
   final String name;

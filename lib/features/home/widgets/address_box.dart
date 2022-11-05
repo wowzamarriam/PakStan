@@ -1,6 +1,7 @@
-import 'package:pakkstan/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../../providers/user_provider.dart';
 
 class AddressBox extends StatelessWidget {
   const AddressBox({Key? key}) : super(key: key);
@@ -14,8 +15,8 @@ class AddressBox extends StatelessWidget {
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Color.fromARGB(255, 114, 226, 221),
-            Color.fromARGB(255, 162, 236, 233),
+            Color.fromARGB(255, 190, 222, 49),
+            Color.fromARGB(255, 175, 190, 36),
           ],
           stops: [0.5, 1.0],
         ),

@@ -1,8 +1,9 @@
-import 'package:pakkstan/common/widgets/loader.dart';
-import 'package:pakkstan/features/home/services/home_services.dart';
-import 'package:pakkstan/features/product_details/screens/product_details_screen.dart';
-import 'package:pakkstan/models/product.dart';
 import 'package:flutter/material.dart';
+
+import '../../../common/widgets/loader.dart';
+import '../../../models/product.dart';
+import '../../product_details/screens/product_details_screen.dart';
+import '../services/home_services.dart';
 
 class DealOfDay extends StatefulWidget {
   const DealOfDay({Key? key}) : super(key: key);
@@ -48,7 +49,7 @@ class _DealOfDayState extends State<DealOfDay> {
                       alignment: Alignment.topLeft,
                       padding: const EdgeInsets.only(left: 10, top: 15),
                       child: const Text(
-                        'Deal of the day',
+                        'Deal Of The Day',
                         style: TextStyle(fontSize: 20),
                       ),
                     ),
@@ -61,7 +62,7 @@ class _DealOfDayState extends State<DealOfDay> {
                       padding: const EdgeInsets.only(left: 15),
                       alignment: Alignment.topLeft,
                       child: const Text(
-                        '\$100',
+                        'Rs 45',
                         style: TextStyle(fontSize: 18),
                       ),
                     ),
@@ -96,10 +97,10 @@ class _DealOfDayState extends State<DealOfDay> {
                         vertical: 15,
                       ).copyWith(left: 15),
                       alignment: Alignment.topLeft,
-                      child: Text(
+                      child: const Text(
                         'See all deals',
                         style: TextStyle(
-                          color: Colors.cyan[800],
+                          color: Colors.black,
                         ),
                       ),
                     ),

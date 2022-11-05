@@ -1,17 +1,23 @@
 import 'dart:io';
 
-import 'package:pakkstan/common/widgets/custom_button.dart';
-import 'package:pakkstan/common/widgets/custom_textfield.dart';
-import 'package:pakkstan/constants/global_variables.dart';
-import 'package:pakkstan/constants/utils.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:pakkstan/features/admin/services/admin_services.dart';
+
+import '../../../common/widgets/custom_button.dart';
+import '../../../common/widgets/custom_textfield.dart';
+import '../../../constants/global_variables.dart';
+import '../../../constants/utils.dart';
+import '../../../models/product.dart';
+import '../services/admin_services.dart';
 
 class AddProductScreen extends StatefulWidget {
   static const String routeName = '/add-product';
-  const AddProductScreen({Key? key}) : super(key: key);
+  final product;
+  const AddProductScreen({
+    Key? key,
+    this.product,
+  }) : super(key: key);
 
   @override
   State<AddProductScreen> createState() => _AddProductScreenState();
@@ -24,9 +30,23 @@ class _AddProductScreenState extends State<AddProductScreen> {
   final TextEditingController quantityController = TextEditingController();
   final AdminServices adminServices = AdminServices();
 
-  String category = 'Mobiles';
-  List<File> images = [];
+  String category = 'Bags';
+  List<dynamic> images = [];
   final _addProductFormKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.product != null) {
+      Product product = widget.product;
+      productNameController.text = product.name;
+      descriptionController.text = product.description;
+      quantityController.text = product.quantity.toString();
+      priceController.text = product.price.toString();
+      category = product.category;
+      images = product.images;
+    }
+  }
 
   @override
   void dispose() {
@@ -38,11 +58,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
   }
 
   List<String> productCategories = [
-    'Mobiles',
-    'Essentials',
-    'Appliances',
-    'Books',
-    'Fashion'
+    'Bags',
+    'Fashion',
+    'Crockery',
+    'Shoes',
+    'Jewellery'
   ];
 
   void sellProduct() {
@@ -54,7 +74,23 @@ class _AddProductScreenState extends State<AddProductScreen> {
         price: double.parse(priceController.text),
         quantity: double.parse(quantityController.text),
         category: category,
-        images: images,
+        images: images as List<File>,
+      );
+    }
+  }
+
+  updateProduct() async {
+    if (_addProductFormKey.currentState!.validate() && images.isNotEmpty) {
+      await adminServices.updateProduct(
+        context: context,
+        product: widget.product,
+        name: productNameController.text,
+        description: descriptionController.text,
+        price: double.parse(priceController.text),
+        quantity: double.parse(quantityController.text),
+        category: category,
+        images: images as List<String>,
+        onSuccess: () {},
       );
     }
   }
@@ -77,9 +113,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
               gradient: GlobalVariables.appBarGradient,
             ),
           ),
-          title: const Text(
-            'Add Product',
-            style: TextStyle(
+          title: Text(
+            widget.product != null ? 'Update Product' : 'Add Product',
+            style: const TextStyle(
               color: Colors.black,
             ),
           ),
@@ -98,11 +134,21 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         items: images.map(
                           (i) {
                             return Builder(
-                              builder: (BuildContext context) => Image.file(
-                                i,
-                                fit: BoxFit.cover,
-                                height: 200,
-                              ),
+                              builder: (BuildContext context) {
+                                if (i is File) {
+                                  return Image.file(
+                                    i,
+                                    fit: BoxFit.cover,
+                                    height: 200,
+                                  );
+                                } else {
+                                  return Image.network(
+                                    i,
+                                    fit: BoxFit.cover,
+                                    height: 200,
+                                  );
+                                }
+                              },
                             );
                           },
                         ).toList(),
@@ -168,7 +214,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 const SizedBox(height: 10),
                 SizedBox(
                   width: double.infinity,
-                  child: DropdownButton(
+                  child: DropdownButton<String>(
                     value: category,
                     icon: const Icon(Icons.keyboard_arrow_down),
                     items: productCategories.map((String item) {
@@ -186,8 +232,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 ),
                 const SizedBox(height: 10),
                 CustomButton(
-                  text: 'Sell',
-                  onTap: sellProduct,
+                  text: widget.product == null ? 'Sell' : "Update",
+                  onTap: widget.product == null ? sellProduct : updateProduct,
                 ),
               ],
             ),

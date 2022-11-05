@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:pakkstan/Constants/global_variables.dart';
-import 'package:pakkstan/features/account/widgets/below_app_bar.dart';
-import 'package:pakkstan/features/account/widgets/orders.dart';
-import 'package:pakkstan/features/account/widgets/top_buttons.dart';
+
+import '../../../Constants/global_variables.dart';
+import '../widgets/below_app_bar.dart';
+import '../widgets/orders.dart';
+import '../widgets/top_buttons.dart';
 
 class AccountScreen extends StatelessWidget {
   const AccountScreen({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -27,23 +29,24 @@ class AccountScreen extends StatelessWidget {
                   'assets/images/logo.png',
                   width: 120,
                   height: 45,
+                  fit: BoxFit.fitWidth,
                   color: Colors.black,
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.only(left: 15, right: 15),
-                child: Row(
-                  children: const [
-                    Padding(
-                      padding: EdgeInsets.only(right: 15),
-                      child: Icon(Icons.notifications_outlined),
-                    ),
-                    Icon(
-                      Icons.search,
-                    ),
-                  ],
-                ),
-              )
+              // Container(
+              //   padding: const EdgeInsets.only(left: 15, right: 15),
+              //   child: Row(
+              //     children: const [
+              //       Padding(
+              //         padding: EdgeInsets.only(right: 15),
+              //         child: Icon(Icons.notifications_outlined),
+              //       ),
+              //       // Icon(
+              //       //   Icons.search,
+              //       // ),
+              //     ],
+              //   ),
+              // )
             ],
           ),
         ),

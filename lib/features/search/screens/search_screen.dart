@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:pakkstan/common/widgets/loader.dart';
-import 'package:pakkstan/constants/global_variables.dart';
-import 'package:pakkstan/features/home/widgets/address_box.dart';
-import 'package:pakkstan/features/product_details/screens/product_details_screen.dart';
-import 'package:pakkstan/features/search/services/search_services.dart';
-import 'package:pakkstan/features/search/widget/searched_product.dart';
-import 'package:pakkstan/models/product.dart';
+
+import '../../../common/widgets/loader.dart';
+import '../../../constants/global_variables.dart';
+import '../../../models/product.dart';
+import '../../home/widgets/address_box.dart';
+import '../../product_details/screens/product_details_screen.dart';
+import '../services/search_services.dart';
+import '../widget/searched_product.dart';
 
 class SearchScreen extends StatefulWidget {
   static const String routeName = '/search-screen';
@@ -94,7 +95,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             width: 1,
                           ),
                         ),
-                        hintText: 'Search Amazon.in',
+                        hintText: 'Search PakStan.pk',
                         hintStyle: const TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 17,
