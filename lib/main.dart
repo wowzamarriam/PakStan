@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'Constants/global_variables.dart';
 import 'common/widgets/bottom_bar.dart';
 import 'features/admin/screens/admin_screen.dart';
@@ -6,7 +7,6 @@ import 'features/auth/screens/auth_screen.dart';
 import 'features/auth/services/auth_service.dart';
 import 'providers/user_provider.dart';
 import 'router.dart';
-import 'package:provider/provider.dart';
 
 void main() {
   runApp(
@@ -20,7 +20,7 @@ void main() {
     ),
   );
 }
-// yeh prho right :) haha
+
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -30,7 +30,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final AuthService authService = AuthService();
-
+  
   @override
   void initState() {
     super.initState();

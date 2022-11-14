@@ -90,7 +90,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
         quantity: double.parse(quantityController.text),
         category: category,
         images: images as List<String>,
-        onSuccess: () {},
+        onSuccess: () {
+          toaster('Item Updated');
+          Navigator.pop(context);
+        },
       );
     }
   }
@@ -235,6 +238,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   text: widget.product == null ? 'Sell' : "Update",
                   onTap: widget.product == null ? sellProduct : updateProduct,
                 ),
+                const SizedBox(height: 10),
               ],
             ),
           ),

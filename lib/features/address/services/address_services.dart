@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../../constants/error_handling.dart';
 import '../../../constants/global_variables.dart';
@@ -53,10 +54,11 @@ class AddressServices {
     required String address,
     required String paymentMethod,
     required double totalSum,
+    required bool isDirect,
   }) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
 
-    try {
+    // try {
       http.Response res = await http.post(
         Uri.parse('$uri/api/order'),
         headers: {
@@ -65,10 +67,19 @@ class AddressServices {
         },
         body: jsonEncode(
           {
-            'cart': userProvider.user.cart,
+          'cart': isDirect
+              ? userProvider.user.favorite.map((e) {
+                  return {
+                    'product': e['product'],
+                    'quantity': 1,
+                    '_id': const Uuid().v1(),
+                  };
+                }).toList()
+              : userProvider.user.cart,
             'payment': paymentMethod,
             'address': address,
             'totalPrice': totalSum,
+            'isDirect': isDirect,
           },
         ),
       );
@@ -77,16 +88,24 @@ class AddressServices {
         response: res,
         context: context,
         onSuccess: () {
-          showSnackBar(context, 'Your order has been placed!');
+        toaster('Your order has been placed!');
+
+        if (!isDirect) {
           User user = userProvider.user.copyWith(
             cart: [],
           );
           userProvider.setUserFromModel(user);
+        } else {
+          User user = userProvider.user.copyWith(
+            favorite: [],
+          );
+          userProvider.setUserFromModel(user);
+        }
         },
       );
-    } catch (e) {
-      showSnackBar(context, e.toString());
-    }
+    // } catch (e) {
+    //   showSnackBar(context, e.toString());
+    // }
   }
 
   void deleteProduct({

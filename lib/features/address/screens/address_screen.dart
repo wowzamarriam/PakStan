@@ -15,10 +15,12 @@ import '../services/address_services.dart';
 
 class AddressScreen extends StatefulWidget {
   static const String routeName = '/address';
+  bool isDirect = false;
   final String totalAmount;
-  const AddressScreen({
+  AddressScreen({
     Key? key,
     required this.totalAmount,
+    this.isDirect = false,
   }) : super(key: key);
 
   @override
@@ -77,6 +79,7 @@ class _AddressScreenState extends State<AddressScreen> {
       address: addressToBeUsed,
       paymentMethod: 'COD',
       totalSum: double.parse(widget.totalAmount),
+      isDirect: widget.isDirect,
     );
   }
 
@@ -91,6 +94,7 @@ class _AddressScreenState extends State<AddressScreen> {
     addressServices.placeOrder(
       context: context,
       address: addressToBeUsed,
+      isDirect: widget.isDirect,
       paymentMethod: 'Apple Pay',
       totalSum: double.parse(widget.totalAmount),
     );
@@ -107,6 +111,7 @@ class _AddressScreenState extends State<AddressScreen> {
     addressServices.placeOrder(
       context: context,
       address: addressToBeUsed,
+      isDirect: widget.isDirect,
       paymentMethod: 'Google Pay',
       totalSum: double.parse(widget.totalAmount),
     );
@@ -252,7 +257,7 @@ class _AddressScreenState extends State<AddressScreen> {
                   onPaymentResult: onGooglePayResult,
                   paymentItems: paymentItems,
                   height: 50,
-                  
+
                   // style: GooglePayButtonStyle.black,
                   type: GooglePayButtonType.buy,
                   // margin: const EdgeInsets.only(top: 15),

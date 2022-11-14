@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
-// String uri = 'http://192.168.0.48:3000';
-String uri = 'http://10.0.2.2:3000'; // yeh emulator ka local host h
+String uri = 'http://192.168.0.46:3000';
+// String uri = 'http://192.168.43.148:3000';
 
+// String uri = 'http://10.0.2.35:3000';
+
+// String uri = 'http://10.0.2.2:3000'; // yeh emulator ka local host h
+
+toaster(String msg) {
+  return Fluttertoast.showToast(
+    msg: msg,
+    toastLength: Toast.LENGTH_SHORT,
+    gravity: ToastGravity.BOTTOM,
+  );
+}
 class GlobalVariables {
   // COLORS
   static const appBarGradient = LinearGradient(
@@ -18,6 +30,7 @@ class GlobalVariables {
   static const Color greyBackgroundColor = Color(0xffebecee);
   static const selectedNavBarColor = Color.fromARGB(255, 190, 222, 49);
   static const unselectedNavBarColor = Colors.black87;
+// real device pr build kro
 
   // STATIC IMAGES
   static const List<String> carouselImages = [

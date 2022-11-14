@@ -3,8 +3,10 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:pakkstan/features/admin/screens/admin_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -81,13 +83,23 @@ class AuthService {
         context: context,
         onSuccess: () async {
           SharedPreferences prefs = await SharedPreferences.getInstance();
-          Provider.of<UserProvider>(context, listen: false).setUser(res.body);
+          final userProvider =
+              Provider.of<UserProvider>(context, listen: false);
+          userProvider.setUser(res.body);
           await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            BottomBar.routeName,
-            (route) => false,
-          );
+          if (userProvider.user.type == 'user') {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              BottomBar.routeName,
+              (route) => false,
+            );
+          } else {// ab check kro ??????
+            Navigator.pushAndRemoveUntil(
+              context,
+              CupertinoPageRoute(builder: (context) => const AdminScreen()),
+              (route) => false,
+            );
+          }
         },
       );
     } catch (e) {

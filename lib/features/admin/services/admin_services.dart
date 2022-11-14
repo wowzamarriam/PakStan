@@ -131,6 +131,7 @@ class AdminServices {
       showSnackBar(context, e.toString());
     }
   }
+
   updateProduct({
     required BuildContext context,
     required String name,
@@ -160,17 +161,13 @@ class AdminServices {
         'Content-Type': 'application/json; charset=UTF-8',
         'x-auth-token': userProvider.user.token,
       },
-      body: jsonEncode({
-        'id': updateProduct.toJson(),
-      }),
+      body: updateProduct.toJson(),
     );
 
     httpErrorHandle(
       response: res,
       context: context,
-      onSuccess: () {
-        onSuccess();
-      },
+      onSuccess: onSuccess,
     );
     // } catch (e) {
     //   showSnackBar(context, e.toString());

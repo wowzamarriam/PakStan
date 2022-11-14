@@ -37,6 +37,7 @@ class ProductDetailsServices {
           User user =
               userProvider.user.copyWith(cart: jsonDecode(res.body)['cart']);
           userProvider.setUserFromModel(user);
+          toaster("Item Added to Cart!");
         },
       );
     } catch (e) {
@@ -96,11 +97,10 @@ class ProductDetailsServices {
         response: res,
         context: context,
         onSuccess: () {
-          // log(jsonDecode(res.body)['favorite'].toString());
           User user = userProvider.user
               .copyWith(favorite: jsonDecode(res.body)['favorite']);
           userProvider.setUserFromModel(user);
-          // log(user.toJson().toString());
+          toaster("Item Added to Wishlist!");
         },
       );
     } catch (e) {

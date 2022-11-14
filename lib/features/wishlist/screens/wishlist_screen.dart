@@ -1,10 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pakkstan/common/widgets/custom_button.dart';
 import 'package:pakkstan/features/wishlist/services/wishlist_services.dart';
 import 'package:pakkstan/models/product.dart';
 import 'package:pakkstan/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../Constants/global_variables.dart';
+import '../../address/screens/address_screen.dart';
 import '../../product_details/screens/product_details_screen.dart';
 import '../../search/widget/searched_product.dart';
 
@@ -26,9 +29,24 @@ class _WishListScreenState extends State<WishListScreen> {
     setState(() {});
   }
 
+  navigateToAddress(int sum) {
+    Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (context) => AddressScreen(
+          totalAmount: sum.toString(),
+          isDirect: true,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
+    int sum = 0;
+    user.favorite.map((e) => e['product']['price'] as int).toList();
+    // log(user.cart.toString());
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(50),
@@ -69,48 +87,79 @@ class _WishListScreenState extends State<WishListScreen> {
           ),
         ),
       ),
-      body: ListView(
-        children: user.favorite.map(
-          (e) {
-            Product product = Product.fromMap(e['product']);
-            return GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  ProductDetailScreen.routeName,
-                  arguments: product,
-                );
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(top: 4.0, bottom: 4),
-                child: Stack(
-                  children: [
-                    SearchedProduct(
-                      product: product,
+      body: user.favorite.isEmpty
+          ? Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 15.0,
+                      vertical: 8,
                     ),
-                    Positioned(
-                      right: 10,
-                      top: 10,
-                      child: IconButton(
-                        onPressed: () async {
-                          await removeFromWishList(
-                            product,
-                          );
-                        },
-                        icon: const Icon(
-                          Icons.delete,
-                          size: 20,
-                          color: Colors.red,
+                    child: Text(
+                      'Oops! Your wishlist is empty!',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          : ListView(
+              children: [
+                ...user.favorite.map(
+                  (e) {
+                    Product product = Product.fromMap(e['product']);
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          ProductDetailScreen.routeName,
+                          arguments: product,
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 4.0, bottom: 4),
+                        child: Stack(
+                          children: [
+                            SearchedProduct(
+                              product: product,
+                            ),
+                            Positioned(
+                              right: 10,
+                              top: 10,
+                              child: IconButton(
+                                onPressed: () async {
+                                  await removeFromWishList(
+                                    product,
+                                  );
+                                },
+                                icon: const Icon(
+                                  Icons.delete,
+                                  size: 20,
+                                  color: Colors.red,
+                                ),
+                              ),
+                            )
+                          ],
                         ),
                       ),
-                    )
-                  ],
+                    );
+                  },
                 ),
-              ),
-            );
-          },
-        ).toList(),
-      ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 15.0,
+                    vertical: 8,
+                  ),
+                  child: CustomButton(
+                    text: 'Checkout all items',
+                    onTap: () => navigateToAddress(sum),
+                  ),
+                ),
+              ],
+            ),
     );
   }
 }

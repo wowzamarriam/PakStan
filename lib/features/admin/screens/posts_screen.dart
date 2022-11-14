@@ -19,7 +19,7 @@ class _PostsScreenState extends State<PostsScreen> {
   final AdminServices adminServices = AdminServices();
 
   @override
-  void initState() {
+  initState() {
     super.initState();
     fetchAllProducts();
   }
@@ -29,7 +29,7 @@ class _PostsScreenState extends State<PostsScreen> {
     setState(() {});
   }
 
-  void deleteProduct(Product product, int index) {
+  deleteProduct(Product product, int index) {
     adminServices.deleteProduct(
       context: context,
       product: product,
@@ -40,8 +40,24 @@ class _PostsScreenState extends State<PostsScreen> {
     );
   }
 
-  void navigateToAddProduct() {
+  navigateToAddProduct() {
     Navigator.pushNamed(context, AddProductScreen.routeName);
+  }
+
+  navigateToUpdateScreen(BuildContext context, Product productData) {
+    Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (context) => AddProductScreen(
+          product: productData,
+        ),
+      ),
+    ).then((value) async {
+      setState(() {
+        products = null;
+      });
+      fetchAllProducts();
+    });
   }
 
   @override
@@ -57,19 +73,12 @@ class _PostsScreenState extends State<PostsScreen> {
                 final productData = products![index];
                 return GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      CupertinoPageRoute(
-                        builder: (context) => AddProductScreen(
-                          product: productData,
-                        ),
-                      ),
-                    );
+                    navigateToUpdateScreen(context, productData);
                   },
                   child: Column(
                     children: [
                       SizedBox(
-                        height: 140,
+                        height: 140, //?
                         child: SingleProduct(
                           image: productData.images[0],
                         ),
