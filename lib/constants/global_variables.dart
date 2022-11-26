@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-String uri = 'http://192.168.0.46:3000';
+String uri = 'https://pakstan.herokuapp.com';
 // String uri = 'http://192.168.43.148:3000';
 
 // String uri = 'http://10.0.2.35:3000';

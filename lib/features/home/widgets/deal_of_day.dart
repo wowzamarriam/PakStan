@@ -61,9 +61,9 @@ class _DealOfDayState extends State<DealOfDay> {
                     Container(
                       padding: const EdgeInsets.only(left: 15),
                       alignment: Alignment.topLeft,
-                      child: const Text(
-                        'Rs 45',
-                        style: TextStyle(fontSize: 18),
+                      child: Text(
+                        'Rs ${product!.price}',
+                        style: const TextStyle(fontSize: 18),
                       ),
                     ),
                     Container(
@@ -92,18 +92,18 @@ class _DealOfDayState extends State<DealOfDay> {
                             .toList(),
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 15,
-                      ).copyWith(left: 15),
-                      alignment: Alignment.topLeft,
-                      child: const Text(
-                        'See all deals',
-                        style: TextStyle(
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
+                    // Container(
+                    //   padding: const EdgeInsets.symmetric(
+                    //     vertical: 15,
+                    //   ).copyWith(left: 15),
+                    //   alignment: Alignment.topLeft,
+                    //   child: const Text(
+                    //     'See all deals',
+                    //     style: TextStyle(
+                    //       color: Colors.black,
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               );
