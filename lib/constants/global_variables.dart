@@ -6,7 +6,7 @@ String uri = 'https://pakstan.herokuapp.com';
 
 // String uri = 'http://10.0.2.35:3000';
 
-// String uri = 'http://10.0.2.2:3000'; // yeh emulator ka local host h
+//String uri = 'http://10.0.2.2:3000'; // yeh emulator ka local host h
 
 toaster(String msg) {
   return Fluttertoast.showToast(
