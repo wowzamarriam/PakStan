@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+//import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
 import 'Constants/global_variables.dart';
 import 'common/widgets/bottom_bar.dart';
@@ -9,6 +10,8 @@ import 'providers/user_provider.dart';
 import 'router.dart';
 
 void main() {
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   runApp(
     MultiProvider(
       providers: [

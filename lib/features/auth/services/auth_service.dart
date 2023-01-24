@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pakkstan/features/admin/screens/admin_screen.dart';
 import 'package:provider/provider.dart';
@@ -52,7 +51,7 @@ class AuthService {
         onSuccess: () {
           showSnackBar(
             context,
-            'Account created! Login with the same credentials!',
+            'Account created! Sign-In with the same credentials!',
           );
         },
       );
@@ -93,7 +92,7 @@ class AuthService {
               BottomBar.routeName,
               (route) => false,
             );
-          } else {// ab check kro ??????
+          } else {
             Navigator.pushAndRemoveUntil(
               context,
               CupertinoPageRoute(builder: (context) => const AdminScreen()),
